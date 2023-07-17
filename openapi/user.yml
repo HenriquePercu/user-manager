@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: User Manager API
+  description: This API describe operations that can be done to an user of the system.
+  version: 0.0.1
+servers:
+  - url: http://api.example.com/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing
+
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Create an user
+      description: Create a new user.
+      tags:
+        - users
+      requestBody:
+        description: User to be created in the system
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':    # status code
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+        - lastName
+        - email
+        - birthDate
+      properties:
+        name:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        birthDate:
+          type: string
+          format: date
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: User ID - format UUID
